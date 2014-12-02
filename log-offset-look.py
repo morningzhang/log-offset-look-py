@@ -13,9 +13,22 @@ def get_file_length(logFile):
 def main(logFiles,n):
   print("==================================")
   for logFile in logFiles:
-    offset=get_offset_value(logFile)
-    length=get_file_length(logFile)
-    precent=str(round(offset*100.0/length,2))
+    try:
+        offset=get_offset_value(logFile)
+    except:
+        offset=0
+
+    try:
+        length=get_file_length(logFile)
+    except:
+        length=0
+
+    if length>0:
+        precent=str(round(offset*100.0/length,2))
+    else:
+        precent="0.00"
+
+
     print("Name:%s => Offset : %d || Length : %d || O/L : %s%%"%(logFile.split("/")[-1],offset,length,precent))
   Timer(n, main,(logFiles,n)).start()
 
